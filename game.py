@@ -6,7 +6,7 @@ This is the initial version with basic functionality.
 import pygame
 import random
 import sys
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 
 class Snake:
@@ -80,8 +80,20 @@ class Food:
 class Game:
     """Main game class that manages the game state."""
     
-    def __init__(self):
-        """Initialize the game."""
+    # Difficulty settings
+    DIFFICULTY_SETTINGS: Dict[str, Dict[str, float]] = {
+        "EASY": {"base_speed": 8, "speed_increment": 0.2, "max_speed": 15},
+        "MEDIUM": {"base_speed": 10, "speed_increment": 0.3, "max_speed": 20},
+        "HARD": {"base_speed": 12, "speed_increment": 0.4, "max_speed": 25}
+    }
+    
+    def __init__(self, difficulty: str = "MEDIUM"):
+        """
+        Initialize the game.
+        
+        Args:
+            difficulty: Game difficulty level ("EASY", "MEDIUM", or "HARD")
+        """
         pygame.init()
         self.screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("Snake Game")
@@ -90,6 +102,13 @@ class Game:
         self.food = Food()
         self.score = 0
         self.game_over = False
+        
+        # Speed management
+        self.difficulty = difficulty.upper()
+        self.settings = self.DIFFICULTY_SETTINGS[self.difficulty]
+        self.current_speed = self.settings["base_speed"]
+        self.speed_increment = self.settings["speed_increment"]
+        self.max_speed = self.settings["max_speed"]
     
     def handle_input(self) -> None:
         """Handle user input."""
@@ -106,6 +125,8 @@ class Game:
                     self.snake.direction = "LEFT"
                 elif event.key == pygame.K_RIGHT and self.snake.direction != "LEFT":
                     self.snake.direction = "RIGHT"
+                elif event.key == pygame.K_r and self.game_over:
+                    self.reset_game()
     
     def update(self) -> None:
         """Update the game state."""
@@ -116,10 +137,23 @@ class Game:
             self.snake.grow = True
             self.food.respawn()
             self.score += 1
+            # Increase speed when food is collected
+            self.current_speed = min(
+                self.current_speed + self.speed_increment,
+                self.max_speed
+            )
         
         # Check for game over
         if self.snake.check_collision():
             self.game_over = True
+    
+    def reset_game(self) -> None:
+        """Reset the game to its initial state."""
+        self.snake = Snake()
+        self.food = Food()
+        self.score = 0
+        self.game_over = False
+        self.current_speed = self.settings["base_speed"]
     
     def draw(self) -> None:
         """Draw the game state to the screen."""
@@ -134,13 +168,18 @@ class Game:
         pygame.draw.rect(self.screen, (255, 0, 0),
                         (self.food.position[0], self.food.position[1], 10, 10))
         
-        # Draw score
+        # Draw score and speed
         font = pygame.font.Font(None, 36)
         score_text = font.render(f"Score: {self.score}", True, (255, 255, 255))
+        speed_text = font.render(f"Speed: {self.current_speed:.1f}", True, (255, 255, 255))
+        difficulty_text = font.render(f"Difficulty: {self.difficulty}", True, (255, 255, 255))
+        
         self.screen.blit(score_text, (10, 10))
+        self.screen.blit(speed_text, (10, 50))
+        self.screen.blit(difficulty_text, (10, 90))
         
         if self.game_over:
-            game_over_text = font.render("Game Over!", True, (255, 0, 0))
+            game_over_text = font.render("Game Over! Press R to Restart", True, (255, 0, 0))
             text_rect = game_over_text.get_rect(center=(400, 300))
             self.screen.blit(game_over_text, text_rect)
         
@@ -153,9 +192,10 @@ class Game:
             if not self.game_over:
                 self.update()
             self.draw()
-            self.clock.tick(10)  # Control game speed
+            self.clock.tick(self.current_speed)
 
 
 if __name__ == "__main__":
-    game = Game()
+    # You can change the difficulty here: "EASY", "MEDIUM", or "HARD"
+    game = Game(difficulty="MEDIUM")
     game.run() 
