@@ -1,0 +1,43 @@
+As the given file is a CSS file, we won't use TypeScript in this case. Here is your CSS file using Tailwind and modern CSS practices:
+
+css
+/* Import Tailwind's base, components, utilities and custom forms plugins */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'tailwindcss/forms';
+
+/* Write your global css below */
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* CSS Variables for theming */
+:root {
+  --primary-color: #1a202c;
+  --secondary-color: #2d3748;
+  --accent-color: #667eea;
+}
+
+/* Use the variables */
+body {
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+}
+
+a {
+  color: var(--accent-color);
+}
+
+
+In this file, we’re using CSS imports to include Tailwind’s base, components, utilities, and forms styles. Also, we're applying some global styles to the html and body elements, and defining some CSS variables for our color theme. Finally, we're using these variables to style the body and anchor (a) elements.
