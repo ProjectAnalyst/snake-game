@@ -1,46 +1,44 @@
+Sure! Here is a complete, production-ready Next.js code for the globals.css file. 
+
 css
-/* Importing Tailwind Directives */
+/* PurgeCSS start ignore */
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+/* PurgeCSS end ignore */
 
-/* Universal styles */
-html, body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  line-height: 1.6;
-  font-size: 18px;
+/* This injects Tailwind's base styles, which is a modern, 
+   opinionated reset that's built using Normalize.css. */
+@import 'tailwindcss/base';
+
+/* This injects any component classes registered by plugins. */
+@import 'tailwindcss/components';
+
+/* Here we add our custom styles */
+:root {
+  /* Define your theme colors here */
+  --color-primary: #1a202c;
+  --color-secondary: #2d3748;
+  --color-text-primary: #e2e8f0;
+  --color-text-secondary: #a0aec0;
 }
 
-* {
-  box-sizing: border-box;
+body {
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  font-family: 'Inter', sans-serif;
 }
 
 a {
-  color: inherit;
+  color: var(--color-text-secondary);
   text-decoration: none;
 }
 
-/* CSS Variables for theming */
-:root {
-  --primary-color: #0070f3;
-  --background-color: #ffffff;
-  --text-color: #333333;
-}
+/* This injects all of Tailwind's utility classes, 
+   which are low-level, utility-first, composable classes. */
+@import 'tailwindcss/utilities';
 
-/* Applying theme */
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-a {
-  color: var(--primary-color);
-}
-
-/* Your additional global styles go here */
+/* Add any additional global styles */
 
 
-Explanation:
-This is a global CSS file for a Next.js project. It includes Tailwind CSS directives, universal styles, and CSS variables for theming. The `:root` selector is used to define CSS variables, and these variables are used within the body and anchor (`a`) tags to apply the theme. You can add your additional global styles at the end of this file.
+This code includes the Tailwind imports and some global styles for the body and anchor tags. CSS variables are used for theming, making it easy to change the theme colors in one place. The imports for Tailwind's base, components, and utilities are included, which are necessary for using the utility-first classes that Tailwind provides.

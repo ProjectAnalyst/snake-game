@@ -1,54 +1,44 @@
-js
-// next.config.js
-
-// Include necessary Next.js configuration
+// Importing necessary modules
 const path = require('path');
-const withCSS = require('@zeit/next-css');
-const withImages = require('next-images');
 
-module.exports = withImages(
-  withCSS({
-    // Set up proper build settings
-    webpack(config, options) {
-      config.resolve.alias['components'] = path.join(__dirname, 'components');
-      return config;
-    },
-
-    // Configure output settings
+module.exports = {
+    // Setting up Next.js build settings
     distDir: 'build',
 
-    // Enable React Strict Mode
+    // Customizing Webpack configuration
+    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+        config.resolve.alias['@'] = path.resolve(__dirname);
+        return config;
+    },
+
+    // Output settings configuration
+    images: {
+        domains: ['localhost', 'example.com'], // Replace with your image domains
+    },
+
+    // Enable React strict mode
     reactStrictMode: true,
 
-    // Runtime Configuration
-    publicRuntimeConfig: {
-      // Will be available on both server and client
-      staticFolder: '/static',
-    },
-
-    // Next.js API Routes
+    // Next.js API Routes configuration
     api: {
-      bodyParser: {
-        sizeLimit: '1mb',
-      },
+        bodyParser: {
+            sizeLimit: '1mb', // You can adjust the size limit as per your requirement
+        },
     },
 
-    // Next.js Images
-    images: {
-      domains: ['example.com'],
+    // Environment variables to be exposed to the browser
+    env: {
+        customKey: process.env.customKey, // Replace 'customKey' with your actual key name
     },
+};
 
-    // Next.js CSS
-    cssModules: true,
-  })
-);
+This is an example code for `next.config.js` file. A few things to note here:
 
-In this `next.config.js` file, we're:
-- Configuring Next.js to handle CSS and image imports with the `@zeit/next-css` and `next-images` libraries
-- Setting up a custom alias for the `components` directory
-- Configuring the output directory to be `build` instead of `.next`
-- Enabling React Strict Mode, which can help to find potential problems in an application during development
-- Setting up a runtime configuration that will make the `/static` path available on both server and client
-- Configuring Next.js API routes to limit the body parser size to 1mb
-- Configuring Next.js to handle images from `example.com`
-- Enabling CSS Modules, which is a CSS file in which all class names and animation names are scoped locally by default
+1. The `distDir` config changes the directory where the build output is placed.
+2. Webpack can be customized by adding a `webpack` function.
+3. `images` allows you to define which domains are allowed to host your images if you are using the `next/image` component.
+4. `reactStrictMode` enables React's Strict Mode, a development mode feature which helps to highlight potential problems in an application.
+5. `api` is used to configure API routes.
+6. `env` allows you to specify environment variables that should be available on the client side.
+
+Remember to replace placeholders with actual values according to your project needs.

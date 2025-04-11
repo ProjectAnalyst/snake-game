@@ -1,64 +1,63 @@
+Here's the main page for your Next.js application:
+
 tsx
+// File: src/app/page.tsx
+
 // Importing necessary modules
-import React, { useRef, useEffect } from 'react';
-import { useRouter } from 'next/router'
-import { NextPage } from 'next';
-import Link from 'next/link';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import Head from 'next/head';
 
-// Importing styled-components for styling
-import styled from 'styled-components';
+const GamePage = () => {
+  // Declare state variables for score and game status
+  const [score, setScore] = useState(0);
+  const [isGameRunning, setGameRunningStatus] = useState(false);
 
-// Main page for the snake game
-const MainPage: NextPage = () => {
-    // Create a reference to the canvas
-    const canvasRef = useRef(null);
+  // Reference for our canvas
+  const canvasRef = useRef(null);
 
-    // Using useEffect to add game logic after component mounts
-    useEffect(() => {
-        const canvas = canvasRef.current;
+  // Initialize game on component mount
+  useEffect(() => {
+    // TODO: Initialization logic for your game
+  }, []);
 
-        // Check if browser supports Canvas
-        if (canvas.getContext) {
-            const ctx = canvas.getContext('2d');
+  // Function to start game
+  const startGame = () => {
+    setGameRunningStatus(true);
+    // TODO: Add logic to start game
+  };
 
-            // Add game logic here...
-            // ...
-        } else {
-            console.error("Canvas not supported in this browser.");
-        }
-    }, []);
+  // Function to stop game
+  const stopGame = () => {
+    setGameRunningStatus(false);
+    // TODO: Add logic to stop game
+  };
 
-    // Using Next.js Router to handle routing
-    const router = useRouter();
-
-    // Error handling
-    if (router.isFallback) {
-        return <div>Loading...</div>
-    }
-
-    return (
-        <div>
-            <Link href="/">
-                <a>
-                    <Image src="/logo.png" alt="logo" width={50} height={50} />
-                </a>
-            </Link>
-
-            <h1>Snake Game</h1>
-            <div>
-                <canvas ref={canvasRef} width="600" height="400"></canvas>
-            </div>
-        </div>
-    );
+  return (
+    <div>
+      <Head>
+        <title>Game Page</title>
+      </Head>
+      <h1>Game Page</h1>
+      <canvas ref={canvasRef} />
+      <div>
+        <p>Score: {score}</p>
+        <button onClick={startGame} disabled={isGameRunning}>
+          Start Game
+        </button>
+        <button onClick={stopGame} disabled={!isGameRunning}>
+          Stop Game
+        </button>
+        <Link href="/">
+          <a>Back to Home</a>
+        </Link>
+      </div>
+    </div>
+  );
 };
 
-export default MainPage;
+export default GamePage;
 
-// Styled-components
-const Canvas = styled.canvas`
-    background-color: #000;
-    border: 1px solid #fff;
-`;
 
-This file represents the Main page for the snake game. Here, we're using the `useRef` hook to create a reference to the canvas element, and the `useEffect` hook to add the game logic after the component has mounted. The `useRouter` hook is used to handle routing, and we have error handling in case the router is in fallback mode. We're also using the `Image` and `Link` components from `next/link` and `next/image` respectively to display a logo and provide a link to the homepage. The styling for the canvas is handled using `styled-components`.
+This page is set up with a basic structure to handle a game using a canvas. You need to fill in the game logic inside the `useEffect`, `startGame` and `stopGame` functions. The score is tracked with a state variable and the game status is also maintained in a state variable. The game controls include start and stop buttons, and a link to go back to the home page. The canvas is referenced by `canvasRef`, which you can use to draw your game.

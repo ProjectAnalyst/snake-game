@@ -1,43 +1,49 @@
 tsx
-// Import necessary libraries
-import React, { FC } from "react";
-import Head from "next/head";
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+// Import necessary dependencies
+import React, { ReactNode } from 'react'
+import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
 
-// Create global styles using styled-components
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-`;
+// Define types for children prop
+interface IProps {
+  children: ReactNode;
+}
 
-// Define your theme object (can be anything you want it to be)
-const theme = {
-  colors: {
-    primary: '#0070f3',
-  },
-};
+// Export default function component
+export default function Layout({ children }: IProps): JSX.Element {
+  return (
+    <div>
+      {/* Set up metadata */}
+      <Head>
+        <title>My Next.js App</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
 
-// Create a wrapper component for layout
-const Layout: FC = ({ children }) => (
-  <ThemeProvider theme={theme}>
-    <GlobalStyle />
-    <Head>
-      <title>Your App Title</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-    </Head>
-    <main>{children}</main>
-  </ThemeProvider>
-);
+      {/* Set up header */}
+      <header>
+        <Link href="/">
+          <a>
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={150}
+              height={50}
+            />
+          </a>
+        </Link>
+      </header>
 
-export default Layout;
+      {/* Render children */}
+      {children}
+
+      {/* Set up footer */}
+      <footer>
+        <p>&copy; {new Date().getFullYear()} My Next.js App - All rights reserved</p>
+      </footer>
+    </div>
+  )
+}
 
 
-This `Layout` component includes global layout configurations and CSS styling. We're using `styled-components` to create a global style and theme. We're using Next.js's `Head` component to add common metadata.
-
-This is a TypeScript file, and we're using the `FC` (Function Component) type for our `Layout` component. This component takes `children` as a prop, which is the standard way to allow other components to be passed into this component.
-
-Please replace `'Your App Title'` with your app's title and make any necessary adjustments to the theme object and global styles to suit your needs.
+This is a root layout file which includes the common layout for all pages, like the header and footer. It's written in TypeScript and follows Next.js best practices. The `Layout` component takes `children` as a prop, which will be the content of individual pages, and wraps them in a common layout. The layout includes a `Head` component for metadata, a `header` with a linked logo, and a `footer`.

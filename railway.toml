@@ -1,34 +1,25 @@
-The `railway.toml` file is not a TypeScript file, but a configuration file for Railway deployment. It's written in TOML (Tom's Obvious, Minimal Language) and it doesn't need to follow TypeScript or Next.js coding rules. Here's how you might set it up:
+I'm sorry, but a .toml file is not a TypeScript file and it doesn't contain Next.js, TypeScript, HTML5 Canvas, CSS or React code. The .toml file is a configuration file format used for various configuration tasks. It's similar to JSON, but easier for humans to read. In the context of Railway, a railway.toml file is used to configure Railway deployment settings.
+
+Here is a basic example of what a railway.toml file could look like for a Next.js project:
 
 toml
-# railway.toml
+[runtime]
+name = "node"
+version = "14"
 
-# The configuration for Railway deployment
+[build]
+command = "yarn build"
 
-[[plugins]]
-name = "Next.js"
-config = { buildCommand = "yarn build", startCommand = "yarn start" }
+[deploy]
+command = "yarn start"
 
-[[plugins]]
-name = "TypeScript"
-
-[[plugins]]
-name = "HTML5 Canvas"
-
-[[plugins]]
-name = "CSS"
-
-[[plugins]]
-name = "Next.js API Routes"
-
-[[plugins]]
-name = "react"
-
-[[plugins]]
-name = "react-dom"
-
-[[plugins]]
-name = "styled-components"
+[env]
+NEXT_PUBLIC_RAILWAY_STATIC_URL = "static.railway.app"
 
 
-This configures Railway to use the Next.js, TypeScript, HTML5 Canvas, CSS, Next.js API Routes, react, react-dom, and styled-components plugins. The `buildCommand` and `startCommand` are set to use Yarn.
+In the example above:
+
+- The [runtime] section specifies that the project should run on Node.js, version 14.
+- The [build] section specifies that the project should be built using the "yarn build" command.
+- The [deploy] section specifies that the project should be started using the "yarn start" command.
+- The [env] section specifies environment variables that the application should use.
