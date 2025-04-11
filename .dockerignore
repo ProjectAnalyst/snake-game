@@ -1,0 +1,26 @@
+The `.dockerignore` file is used to ignore certain files and directories while building a Docker image. This is not a TypeScript file, so there is no need for typing. Here's an example of how this file could look for a Next.js project:
+
+dockerignore
+# Ignore node_modules
+node_modules
+
+# Ignore .next folder
+.next
+
+# Ignore .git folder
+.git
+
+# Ignore any logs
+*.log
+
+# Ignore all .env files
+*.env
+
+# Ignore other non-production files
+.DS_Store
+README.md
+LICENSE
+.vscode
+
+
+In this example, we ignore `node_modules`, `.next`, `.git`, any log files, any `.env` files, `.DS_Store` (a file that Macs generate), the README and LICENSE files, and any VSCode configuration files. This helps to keep the Docker image as small and clean as possible, containing only the files necessary for running the application.

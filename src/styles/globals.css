@@ -1,0 +1,46 @@
+css
+/* Importing Tailwind Directives */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Universal styles */
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* CSS Variables for theming */
+:root {
+  --primary-color: #0070f3;
+  --background-color: #ffffff;
+  --text-color: #333333;
+}
+
+/* Applying theme */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+a {
+  color: var(--primary-color);
+}
+
+/* Your additional global styles go here */
+
+
+Explanation:
+This is a global CSS file for a Next.js project. It includes Tailwind CSS directives, universal styles, and CSS variables for theming. The `:root` selector is used to define CSS variables, and these variables are used within the body and anchor (`a`) tags to apply the theme. You can add your additional global styles at the end of this file.
